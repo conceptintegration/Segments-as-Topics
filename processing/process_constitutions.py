@@ -2,49 +2,53 @@
 # -*- coding: utf-8 -*-
 
 __author__      = 'Roy Gardner'
+__copyright__   = 'Copyright 2025, Roy Gardner and Sally Gardner'
 
 """
 
-Generates segment data including SATs:
+Generates following model files from constitution XML:
 
+- documents_dict.json
 - segments_dict.json
 - segment_encodings.json
 - encoded_segments.json
-- sat_segments_dict.json
 
-In contrast to process_segments.py this process DOES NOT segment constitution sections.
+Also serialises configuration dictionary into config.json
+
+This process DOES NOT segment constitution sections.
 
 """
 
 from packages import *
+from utilities import *
 
-def process(documents_dict,config,encoder):
+def process(config):
 
     error_list = []
 
     # Key is a segment identifier, value is a text segment
+    documents_dict = {}
     segments_dict = {}
 
-    xml_dir = config['constitutions_path']
-    _, _, files = next(os.walk(xml_dir))
+    data_path,model_path,encoder_path,_ = validate_paths(config)
+
+    encoder = hub.load(encoder_path)
+
+    _, _, files = next(os.walk(data_path))
     files = [f for f in files if not f[0] == '.']
+
+    print('Segmenting…')
     for i, file in enumerate(files):
-
-        sys.stdout.write("\r" + str(i))
-        sys.stdout.flush()
-
         constitution_id = os.path.splitext(file)[0]
-        if not constitution_id in documents_dict:
-            continue
+        documents_dict[constitution_id] = {}
+        documents_dict[constitution_id]['name'] = constitution_id
 
-        xml_file = xml_dir + file
+        xml_file = data_path + file
         tree = etree.parse(xml_file)
-
         results = []
         for type_ in config['element_types']:
             search_str = ".//*[@type='" + type_ + "']"
             results.extend(tree.findall(search_str))
-
 
         for elem in results:
             # Get the section ID which we are calling the segment_id because of data model conventions
@@ -57,23 +61,19 @@ def process(documents_dict,config,encoder):
                     if 'en' in content_elem.values():
                         text = content_elem.text
                         if text == None:
-                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'None'))
+                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'Element text = None'))
                             continue
                         if not type(text) == str:
-                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'Not a string'))
+                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'Element text not a string'))
                             continue
                         else:
                             text = html.unescape(text)
                         if len(text.strip()) == 0:
-                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'Empty'))
+                            error_list.append((constitution_id,elem.get('uri').split('/')[1],'Element text is empty'))
                             continue
                         
                         segments_dict[segment_id] = {}
                         segments_dict[segment_id]['text'] = text.strip()
-
-
-    sys.stdout.write("\r")
-    sys.stdout.flush()
 
     # Write errors to disk
     model_filename = config['model_path'] + 'error_list.json'
@@ -81,25 +81,12 @@ def process(documents_dict,config,encoder):
         json.dump(error_list, outfile)
         outfile.close() 
 
-    encoded_segments = [k for k in segments_dict.keys()]
-    segments_text_list = [v['text'] for _,v in segments_dict.items()]
-
-    print('Encoding:',len(segments_text_list))
-
-    indices = list(range(0,len(segments_text_list)))
-    split_list = np.array_split(indices,100)
-    print('Split list')
-    segment_encodings = []
-    print('Starting split loop…')
-    for i,l in enumerate(split_list):
-        #print('Encoding',str(i + 1),'of 100')
-        split = [segments_text_list[index] for index in list(l)]
-        encodings = encoder(split)
-        assert(len(encodings) == len(split))
-        segment_encodings.extend(np.array(encodings).tolist())
-    print('Finished split loop')
+    segment_encodings,encoded_segments = encode_segments(segments_dict,encoder,split_size=100)
  
+    serialise_model(model_path,documents_dict,segments_dict,encoded_segments,segment_encodings,config)
 
+    if len(error_list) > 0:
+        print(f'Finished processing. There were data source errors — see error_list.json in {model_path}')
+    else:
+        print('Finished processing.')
 
-        
-    return segments_dict,segment_encodings,encoded_segments

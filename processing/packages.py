@@ -22,7 +22,15 @@ import pandas as pd
 import scipy as sp
 from scipy.spatial.distance import *
 
+import spacy
+from spacy.lang.en import English
+from spacy.language import Language 
+import string
+
 import tensorflow as tf
 import tensorflow_hub as hub
+
+import textract
+
 import time
 import tensorflow_text
