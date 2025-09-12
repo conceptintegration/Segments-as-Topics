@@ -98,7 +98,7 @@ if __name__ == '__main__':
         'spacy_path': '../spaCy models/es_core_news_lg-3.8.0/',
         'data_fields':['text'],
         'id_field':'', # If empty row ID defaults to row number
-        'label': 'Chilean plenary session transcripts in Excel files',
+        'label': 'Chilean plenary session transcripts (Excel)',
         'description':'Segmenting and encoding Spanish-language transcripts in Excel files.'
     }
 
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         'spacy_path': '../spaCy models/es_core_news_lg-3.8.0/',
         'data_fields':['text'],
         'id_field':'', # If empty row ID defaults to row number
-        'label': 'Chilean plenary session transcripts in CSV files',
+        'label': 'Chilean plenary session transcripts (CSV)',
         'description':'Segmenting and encoding Spanish-language transcripts in CSV files.'
     }
 
