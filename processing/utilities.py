@@ -36,6 +36,29 @@ def validate_paths(config):
             raise PathException('Segmenter cannot be found please check the configuration.\n')
     return data_path,model_path,encoder_path,spacy_path
 
+class DataFieldException(Exception):
+  pass
+
+def validate_xlxs_fields(row_dict,file,config):
+    if len(config['id_field'].strip()) > 0 and not config['id_field'] in row_dict:
+        raise PathException(f'id_field not found in file {file}')
+    missing_fields = []
+    for _,field in enumerate(config['data_fields']):
+        if not field in row_dict:
+            missing_fields.append(field)   
+    if len(missing_fields) > 0:
+        raise PathException(f'The following data fields {missing_fields} are missing from {file}')
+    
+def validate_csv_fields(header,file,config):
+    if len(config['id_field'].strip()) > 0 and not config['id_field'] in header:
+        raise PathException(f'id_field not found in file {file}')
+    missing_fields = []
+    for _,field in enumerate(config['data_fields']):
+        if not field in header:
+            missing_fields.append(field)   
+    if len(missing_fields) > 0:
+        raise PathException(f'The following data fields {missing_fields} are missing from {file}')
+
 def encode_segments(segments_dict,encoder,split_size=80):
     # Encode
     print('Encoding segments…')

@@ -45,6 +45,10 @@ def process(config):
         xlsx_file = data_path + file
         source = os.path.splitext(file)[0]  
         rows = xlsx_to_rows_list(xlsx_file)
+
+        # Validate data and id fields
+        validate_xlxs_fields(rows[0],file,config)        
+
         for i, row_dict in enumerate(rows):
             if len(config['id_field'].strip()) == 0 or not config['id_field'] in row_dict:
                 row_id = str(i)

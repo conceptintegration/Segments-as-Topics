@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     # Configuration for processing anarchist documentation in Word documents
     config['anarchism'] = {
-        'run': True, # Set to True if you want to run this process
+        'run': False, # Set to True if you want to run this process
         'processor': process_documents,
         'data_path': '../data/anarchism/',
         'model_path': '../model/anarchism/',
@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
     # Configuration for processing Spanish-language transcripts in Excel files
     config['chile_xlxs'] = {
-        'run': True, # Set to True if you want to run this process
+        'run': False, # Set to True if you want to run this process
         'processor': process_xlsx,
         'data_path': '../data/chile_xlsx/',
         'model_path': '../model/chile_xlsx/',
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     # Configuration for processing Spanish-language transcripts in CSV files
     config['chile_csv'] = {
-        'run': True, # Set to True if you want to run this process
+        'run': False, # Set to True if you want to run this process
         'processor': process_csv,
         'data_path': '../data/chile_csv/',
         'model_path': '../model/chile_csv/',

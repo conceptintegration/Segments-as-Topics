@@ -52,6 +52,8 @@ def process(config):
             header = next(reader)
             # Put the remaining rows into a list of lists
             data = [row for row in reader]
+
+        validate_csv_fields(header,file,config)
         
         for i,row in enumerate(data):
             if len(config['id_field'].strip()) == 0 or not config['id_field'] in header:
