@@ -276,7 +276,7 @@ For any other questions or additional information, please contact Matthew Martin
 
 ### License
 
-This project is licensed under the [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) license.
+This project is licensed under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 ### Citation
 
