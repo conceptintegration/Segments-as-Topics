@@ -240,6 +240,12 @@ The notebook contains detailed documentation for each analysis step.
 
 ---
 
+## Tutorial
+
+For a complete walkthrough of these tools, check out our [video tutorial](https://www.youtube.com/watch?v=sm_0M5XHkk0&t=15s).
+
+---
+
 ## Troubleshooting
 
 ### Common Issues
