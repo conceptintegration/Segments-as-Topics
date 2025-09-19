@@ -308,4 +308,10 @@ BibTeX:
 ```
 ---
 
+## Funding Acknoledgment
+
+This material is based upon work supported by the National Science Foundation under Grant Number 2315189. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation (NSF). The research team deeply appreciates NSF’s Accountable Institutions and Behavior program and Human Networks and Data Science program for this support.
+
+---
+
 Happy analyzing!
