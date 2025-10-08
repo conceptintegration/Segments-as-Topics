@@ -81,25 +81,20 @@ def serialise_model(model_path,documents_dict,segments_dict,encoded_segments,seg
     model_filename = model_path + 'documents_dict.json'
     with open(model_filename, 'w') as f:
         json.dump(documents_dict, f)
-        f.close()
     model_filename = model_path + 'segments_dict.json'
     with open(model_filename, 'w') as f:
         json.dump(segments_dict, f)
-        f.close()
     model_filename = model_path + 'encoded_segments.json'
     with open(model_filename, 'w') as f:
         json.dump(encoded_segments, f)
-        f.close()
     model_filename = model_path + 'segment_encodings.json'
     with open(model_filename, 'w') as f:
         json.dump(segment_encodings, f)
-        f.close()
     # Serialise the configuration without the processor module
     model_filename = model_path + 'config.json'
     _ = config.pop('processor')
     with open(model_filename, 'w') as f:
         json.dump(config, f)
-        f.close()
 
 def xlsx_to_rows_list(xlsx_file):
     """
