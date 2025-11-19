@@ -18,6 +18,10 @@ The methodology consists of four stages:
 
 This repository focuses on the implementation of this method as applied to the Comparative Constitutions Project vocabulary, which tracks over 330 topics in national constitutions.
 
+## Tutorial
+
+For a complete walkthrough of these tools, check out our [video tutorial](https://www.youtube.com/watch?v=sm_0M5XHkk0&t=15s).
+
 ## System Requirements
 
 - **Operating Systems**: macOS (Intel or ARM), Linux, or Windows
@@ -237,12 +241,6 @@ This enables the system to automatically determine whether to show hyperlinks or
 Run the first cell to complete initialization. Once initialized, you can run other cells as needed to perform specific analyses or visualizations.
 
 The notebook contains detailed documentation for each analysis step.
-
----
-
-## Tutorial
-
-For a complete walkthrough of these tools, check out our [video tutorial](https://www.youtube.com/watch?v=sm_0M5XHkk0&t=15s).
 
 ---
 
