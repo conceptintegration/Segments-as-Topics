@@ -262,6 +262,8 @@ The notebook contains detailed documentation for each analysis step.
 
 5. **Pipeline configuration errors**: Check that processor types are correctly specified and required fields are present for each data type
 
+6. **Error displaying widgets**: Shutdown the Jupyter server and run `pip install --upgrade notebook ipywidgets` in the Terminal (or equivalent command-line interface). Restart the server and try again. 
+
 ### Getting Help
 
 If you encounter any obstacles not covered in this documentation, please [click here](https://github.com/conceptintegration/SAT-method/issues/new) to submit an issue to the repository. A GitHub account is required. Please include the following in your submission:
