@@ -170,7 +170,6 @@ tensorflow-io-gcs-filesystem==0.37.1
 tensorflow-text==2.17.0
 termcolor==2.5.0
 terminado==0.18.1
-textract==1.6.5
 tf-keras==2.17.0
 thinc==8.2.5
 tinycss2==1.4.0
