@@ -40,6 +40,7 @@ For a complete walkthrough of these tools, check out our [video tutorial](https:
 3. Clone or download this repository
 4. Navigate to the repository directory and install required packages:
    ```
+   pip install "pip<24.1" && pip install textract==1.6.5 && pip install --upgrade pip
    pip install -r required_packages.txt
    ```
 5. Launch Jupyter Notebook:
