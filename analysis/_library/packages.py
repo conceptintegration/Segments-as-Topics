@@ -43,7 +43,15 @@ import string
 
 import tensorflow as tf
 import tensorflow_hub as hub
-import tensorflow_text
+
+try:
+    # Only needed to load the multilingual USE v3 encoder (Spanish-language
+    # datasets). Has no Windows wheel compatible with TensorFlow 2.17, and
+    # is not installed by default - see load_encoder() in utilities.py for
+    # the guarded failure message.
+    import tensorflow_text
+except ImportError:
+    tensorflow_text = None
 
 import time
 

@@ -6,6 +6,29 @@ __copyright__   = 'Copyright 2025, Roy and Sally Gardner'
 
 from packages import *
 
+def load_encoder(encoder_path):
+    # The multilingual USE v3 encoder (Spanish-language datasets) needs
+    # tensorflow_text to register the ops its SavedModel graph depends on;
+    # without it, hub.load() fails with a generic "Op type not registered
+    # 'SentencepieceOp'" error. tensorflow_text has no Windows wheel
+    # compatible with TensorFlow 2.17, so raise a clearer, actionable
+    # message instead. The English 'use-4' encoder does not need it.
+    try:
+        return hub.load(encoder_path)
+    except Exception as e:
+        if tensorflow_text is None and 'not registered' in str(e).lower():
+            raise ImportError(
+                f"Failed to load the encoder at '{encoder_path}'. If this is the "
+                "multilingual Universal Sentence Encoder (USE v3, used for "
+                "Spanish-language processing), it requires the 'tensorflow-text' "
+                "package, which is not installed. tensorflow-text has no Windows "
+                "wheel compatible with TensorFlow 2.17, so multilingual/Spanish "
+                "encoding is not available on Windows; install it with "
+                "`pip install tensorflow-text==2.17.0` on Linux or macOS. The "
+                "English-only 'use-4' encoder does not require tensorflow-text."
+            ) from e
+        raise
+
 def do_load(model_path,exclusion_list=[],verbose=True):
     # Load the data model
     if verbose:

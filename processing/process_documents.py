@@ -28,7 +28,7 @@ def process(config):
 
     data_path,model_path,encoder_path,spacy_path = validate_paths(config)
 
-    encoder = hub.load(encoder_path)
+    encoder = load_encoder(encoder_path)
     nlp = spacy.load(spacy_path)
     nlp.max_length = 3000000
 

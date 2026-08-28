@@ -33,4 +33,12 @@ import tensorflow_hub as hub
 import textract
 
 import time
-import tensorflow_text
+
+try:
+    # Only needed to load the multilingual USE v3 encoder (used for the
+    # Spanish-language chile_xlxs/chile_csv configs). Has no Windows wheel
+    # compatible with TensorFlow 2.17, and is not installed by default -
+    # see load_encoder() in utilities.py for the guarded failure message.
+    import tensorflow_text
+except ImportError:
+    tensorflow_text = None

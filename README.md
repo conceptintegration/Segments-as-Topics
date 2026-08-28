@@ -24,12 +24,14 @@ For a complete walkthrough of these tools, check out our [video tutorial](https:
 
 ## System Requirements
 
-- **Operating Systems**: macOS (Intel or ARM), Linux, or Windows
+- **Operating Systems**: macOS (Intel or ARM) and Linux are supported natively. Windows is supported via [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) — see [Windows Setup (WSL2)](#windows-setup-wsl2) below. Native Windows is not supported: `analysis/_library` and `processing` only ship a precompiled `angular_distance.so` for Mac Intel, Mac ARM, and Linux Intel.
 - **RAM**: Minimum 8GB recommended, 16GB+ for large datasets
 - **Storage**: At least 5GB of free space
 - **Python**: Version 3.9.21 (managed via Anaconda)
 
 ## Quick Start
+
+> **On Windows?** Follow [Windows Setup (WSL2)](#windows-setup-wsl2) first, then run the steps below unchanged inside Ubuntu. Native Windows is not supported.
 
 1. Install [Anaconda](https://www.anaconda.com/download)
 2. Open a new terminal window and run:
@@ -40,7 +42,6 @@ For a complete walkthrough of these tools, check out our [video tutorial](https:
 3. Clone or download this repository
 4. Navigate to the repository directory and install required packages:
    ```
-   pip install "pip<24.1" && pip install textract==1.6.5 && pip install --upgrade pip
    pip install -r required_packages.txt
    ```
 5. Launch Jupyter Notebook:
@@ -48,6 +49,20 @@ For a complete walkthrough of these tools, check out our [video tutorial](https:
    jupyter notebook
    ```
 6. Open `installer.ipynb` and select **"Run All Cells"** from the "Run" tab
+
+---
+
+## Windows Setup (WSL2)
+
+Windows is supported via WSL2 only (see System Requirements above). This runs the whole tool inside WSL2's Ubuntu, using the same Linux install path as everyone else:
+
+1. From an elevated PowerShell: `wsl --install -d Ubuntu`, then restart when prompted.
+2. Open the Ubuntu terminal and install Miniconda:
+   ```
+   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+   bash Miniconda3-latest-Linux-x86_64.sh
+   ```
+3. Follow the Quick Start or Detailed Installation instructions below unchanged, from inside the Ubuntu shell. Clone the repository into the Linux filesystem (e.g. `~/Segments-as-Topics`) rather than a `/mnt/c/...` Windows path, for reliable file performance.
 
 ---
 
@@ -159,6 +174,12 @@ The system now uses a unified pipeline architecture that can process multiple da
 - **XLSX**: Excel files with optional metadata and segmentation
 - **JSON**: Structured data files with configurable field processing
 - **CSV**: Tabular data with customizable field mapping
+
+Most configs (CCP constitutions, anarchist documents) use the English `use-4` encoder and work with just `required_packages.txt`. The Spanish-language configs (`chile_xlxs`, `chile_csv`) use the multilingual `use_ml_3` encoder, which additionally requires:
+```
+pip install tensorflow-text==2.17.0
+```
+This package has no Windows wheel compatible with TensorFlow 2.17, so the Spanish-language configs are only available on Linux or macOS (including WSL2). Running one of these configs without it fails with a clear error naming the missing package, rather than an import error at startup.
 
 ### Running `pipeline.py`
 

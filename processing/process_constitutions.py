@@ -32,7 +32,7 @@ def process(config):
 
     data_path,model_path,encoder_path,_ = validate_paths(config)
 
-    encoder = hub.load(encoder_path)
+    encoder = load_encoder(encoder_path)
 
     _, _, files = next(os.walk(data_path))
     files = [f for f in files if not f[0] == '.']
